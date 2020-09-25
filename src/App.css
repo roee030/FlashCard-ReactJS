@@ -1,0 +1,23 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-size: 62.5%;
+}
+.cardsWraper {
+  font-size: 5rem;
+  flex-direction: column;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.questionCard {
+  font-size: 10rem;
+}
+.btns {
+  display: flex;
+  justify-content: center;
+}
+.completedQuestion {
+  text-align: center;
+}
