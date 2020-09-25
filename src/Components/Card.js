@@ -3,6 +3,7 @@ import Guess from "./Guess";
 import axios from "axios";
 export default class Card extends Component {
   state = {
+    myDataFromMockApi: null,
     qaa: [
       {
         q: "What is my first name?",
@@ -27,10 +28,13 @@ export default class Card extends Component {
     this.getData();
   }
   getData = async () => {
-    const avatar = await axios.get(
+    const data = await axios.get(
       `https://5f636146363f0000162d8949.mockapi.io/ra/v1/card`
     );
-    console.log(avatar);
+    // console.log(data.data);
+    this.setState({ myDataFromMockApi: [data.data] }, () =>
+      console.log(this.state.myDataFromMockApi)
+    );
   };
   revealAnswer = () => {
     this.setState({ showReveal: !this.state.showReveal });
@@ -49,7 +53,10 @@ export default class Card extends Component {
         {this.state.showReveal ? <Guess /> : null}
         <div className="completedQuestion">
           Completed <br></br>
-          {this.state.complete}/{this.state.qaa.length}
+          {this.state.complete}/
+          {this.state.myDataFromMockApi
+            ? this.state.myDataFromMockApi[0].length
+            : "0"}
         </div>
       </div>
     );
