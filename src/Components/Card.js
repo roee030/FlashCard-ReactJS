@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Guess from "./Guess";
+import axios from "axios";
 export default class Card extends Component {
   state = {
     qaa: [
@@ -20,16 +21,32 @@ export default class Card extends Component {
       },
     ],
     complete: 0,
+    showReveal: false,
+  };
+  componentDidMount() {
+    this.getData();
+  }
+  getData = async () => {
+    const avatar = await axios.get(
+      `https://5f636146363f0000162d8949.mockapi.io/ra/v1/card`
+    );
+    console.log(avatar);
+  };
+  revealAnswer = () => {
+    this.setState({ showReveal: !this.state.showReveal });
+  };
+  generateCard = () => {
+    console.log("asdf");
   };
   render() {
     return (
       <div className="cardsWraper">
         <div className="questionCard">{this.state.qaa[0].q}</div>
         <div className="btns">
-          <button>New Card</button>
-          <button>Reveal Answer</button>
+          <button onClick={this.generateCard}>New Card</button>
+          <button onClick={this.revealAnswer}>Reveal Answer</button>
         </div>
-        <Guess />
+        {this.state.showReveal ? <Guess /> : null}
         <div className="completedQuestion">
           Completed <br></br>
           {this.state.complete}/{this.state.qaa.length}
