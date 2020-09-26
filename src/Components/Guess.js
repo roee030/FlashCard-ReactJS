@@ -5,8 +5,21 @@ export default function Guess(props) {
     <div>
       Did you get it right?
       <div className="btns">
-        <button onClick={props.addComplete}>Yes</button>
-        <button>No</button>
+        <button
+          onClick={() => {
+            props.addComplete();
+            props.closeComponent();
+          }}
+        >
+          Yes
+        </button>
+        <button
+          onClick={() => {
+            props.closeComponent();
+          }}
+        >
+          No
+        </button>
       </div>
     </div>
   );

@@ -58,6 +58,9 @@ export default class Card extends Component {
   };
   revealAnswer = () => {
     this.setState({ showReveal: !this.state.showReveal });
+    this.setState({
+      cardText: this.state.shuffleCardDeck[this.state.currentID - 1].answer,
+    });
   };
   generateCard = () => {
     if (this.state.shuffleCardDeck[this.state.currentID])
@@ -85,6 +88,11 @@ export default class Card extends Component {
       complete: prevState.complete + 1,
     }));
   };
+  revealAnswer = () => {
+    this.setState((prevState) => ({
+      showReveal: !prevState.showReveal,
+    }));
+  };
   render() {
     console.log(
       this.state.currentID,
@@ -107,7 +115,10 @@ export default class Card extends Component {
         )}
 
         {this.state.showReveal ? (
-          <Guess addComplete={this.guessComplete} />
+          <Guess
+            addComplete={this.guessComplete}
+            closeComponent={this.revealAnswer}
+          />
         ) : null}
         <div className="completedQuestion">
           Completed <br></br>
