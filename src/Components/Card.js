@@ -72,25 +72,43 @@ export default class Card extends Component {
     }
     // if (this.state.shuffleCardDeck[this.state.currentID] == undefined) return;
   };
-  guessComplete = () => {};
+  startNewGame = async () => {
+    await this.getData();
+    await this.shuflleCard();
+    this.setState((prevState) => ({
+      currentID: 0,
+    }));
+    await this.generateCard();
+  };
+  guessComplete = () => {
+    this.setState((prevState) => ({
+      complete: prevState.complete + 1,
+    }));
+  };
   render() {
-    console.log(this.state.shuffleCardDeck.length, this.state.currentID);
+    console.log(
+      this.state.currentID,
+      this.state.shuffleCardDeck.length,
+      this.state.currentID
+    );
     return (
       <div className="cardsWraper">
         <div className="questionCard">
           <CardBox cardText={this.state.cardText} />
         </div>
 
-        {this.state.shuffleCardDeck.length > this.state.currentID - 1 ? (
+        {this.state.shuffleCardDeck.length >= this.state.currentID ? (
           <div className="btns">
             <button onClick={this.generateCard}>New Card</button>
             <button onClick={this.revealAnswer}>Reveal Answer</button>
           </div>
         ) : (
-          <button>Start Again</button>
+          <button onClick={this.startNewGame}>Start Again</button>
         )}
 
-        {this.state.showReveal ? <Guess /> : null}
+        {this.state.showReveal ? (
+          <Guess addComplete={this.guessComplete} />
+        ) : null}
         <div className="completedQuestion">
           Completed <br></br>
           {this.state.complete}/

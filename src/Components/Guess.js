@@ -1,15 +1,13 @@
-import React, { Component } from "react";
+import React from "react";
 
-export default class Guess extends Component {
-  render() {
-    return (
-      <div>
-        Did you get it right?
-        <div className="btns">
-          <button>Yes</button>
-          <button>No</button>
-        </div>
+export default function Guess(props) {
+  return (
+    <div>
+      Did you get it right?
+      <div className="btns">
+        <button onClick={props.addComplete}>Yes</button>
+        <button>No</button>
       </div>
-    );
-  }
+    </div>
+  );
 }
