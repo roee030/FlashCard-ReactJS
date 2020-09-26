@@ -84,14 +84,26 @@ export default class Card extends Component {
     await this.generateCard();
   };
   guessComplete = () => {
-    this.setState((prevState) => ({
-      complete: prevState.complete + 1,
-    }));
+    try {
+      this.state.shuffleCardDeck[this.state.currentID - 1].complete = true;
+    } catch (e) {
+      return;
+    }
   };
   revealAnswer = () => {
     this.setState((prevState) => ({
       showReveal: !prevState.showReveal,
     }));
+  };
+  checkComplete = () => {
+    try {
+      const complete = this.state.shuffleCardDeck.filter(
+        (e) => e.complete == true
+      );
+      return complete.length;
+    } catch (e) {
+      console.log("error inside checkComplete function");
+    }
   };
   render() {
     console.log(
@@ -122,7 +134,7 @@ export default class Card extends Component {
         ) : null}
         <div className="completedQuestion">
           Completed <br></br>
-          {this.state.complete}/
+          {this.checkComplete()}/
           {this.state.myDataFromMockApi
             ? this.state.myDataFromMockApi.length
             : "0"}
