@@ -28,11 +28,12 @@ export default class Card extends Component {
     cardText: "",
     currentQuestion: "",
     currentAnswer: "",
-    currentID: "",
+    currentID: 0,
   };
   componentDidMount = async () => {
     await this.getData();
     await this.shuflleCard();
+    await this.generateCard();
   };
   //get data from mockapi
   getData = async () => {
@@ -59,19 +60,36 @@ export default class Card extends Component {
     this.setState({ showReveal: !this.state.showReveal });
   };
   generateCard = () => {
-    this.shuflleCard();
+    if (this.state.shuffleCardDeck[this.state.currentID])
+      this.setState((prevState) => ({
+        currentID: prevState.currentID + 1,
+        cardText: this.state.shuffleCardDeck[this.state.currentID].question,
+      }));
+    else {
+      this.setState((prevState) => ({
+        currentID: prevState.currentID + 1,
+      }));
+    }
+    // if (this.state.shuffleCardDeck[this.state.currentID] == undefined) return;
   };
   guessComplete = () => {};
   render() {
+    console.log(this.state.shuffleCardDeck.length, this.state.currentID);
     return (
       <div className="cardsWraper">
         <div className="questionCard">
           <CardBox cardText={this.state.cardText} />
         </div>
-        <div className="btns">
-          <button onClick={this.generateCard}>New Card</button>
-          <button onClick={this.revealAnswer}>Reveal Answer</button>
-        </div>
+
+        {this.state.shuffleCardDeck.length > this.state.currentID - 1 ? (
+          <div className="btns">
+            <button onClick={this.generateCard}>New Card</button>
+            <button onClick={this.revealAnswer}>Reveal Answer</button>
+          </div>
+        ) : (
+          <button>Start Again</button>
+        )}
+
         {this.state.showReveal ? <Guess /> : null}
         <div className="completedQuestion">
           Completed <br></br>
