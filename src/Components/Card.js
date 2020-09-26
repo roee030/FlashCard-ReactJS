@@ -63,6 +63,9 @@ export default class Card extends Component {
     });
   };
   generateCard = () => {
+    this.setState((prevState) => ({
+      showReveal: false,
+    }));
     if (this.state.shuffleCardDeck[this.state.currentID])
       this.setState((prevState) => ({
         currentID: prevState.currentID + 1,
@@ -92,7 +95,8 @@ export default class Card extends Component {
   };
   revealAnswer = () => {
     this.setState((prevState) => ({
-      showReveal: !prevState.showReveal,
+      cardText: this.state.shuffleCardDeck[prevState.currentID - 1].answer,
+      showReveal: true,
     }));
   };
   checkComplete = () => {
@@ -104,6 +108,11 @@ export default class Card extends Component {
     } catch (e) {
       console.log("error inside checkComplete function");
     }
+  };
+  closeComponentOfReveal = () => {
+    this.setState({
+      showReveal: false,
+    });
   };
   render() {
     console.log(
@@ -129,7 +138,7 @@ export default class Card extends Component {
         {this.state.showReveal ? (
           <Guess
             addComplete={this.guessComplete}
-            closeComponent={this.revealAnswer}
+            closeComponent={this.closeComponentOfReveal}
           />
         ) : null}
         <div className="completedQuestion">

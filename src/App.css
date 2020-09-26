@@ -24,3 +24,54 @@
 .questionCard {
   text-align: center;
 }
+.manageData {
+  margin: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+}
+.dataToEdit {
+  background-color: brown;
+  padding: 20px;
+  margin: 20px;
+  color: wheat;
+  font-size: 3.5rem;
+}
+.manageBtn {
+  display: flex;
+  justify-content: center;
+}
+
+.manageBtn > button {
+  margin: 5px;
+  padding: 10px;
+  background-color: white;
+  border: none;
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+  border-radius: 45px;
+  cursor: pointer;
+  outline: none;
+}
+.addNewCard {
+  margin: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+}
+.addNewCard > button {
+  font-size: 1.5rem;
+  margin: 5px;
+  padding: 10px;
+  background-color: white;
+  border: none;
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+  border-radius: 45px;
+  cursor: pointer;
+  outline: none;
+}
+.newCardForm {
+  display: flex;
+  flex-direction: column;
+}
