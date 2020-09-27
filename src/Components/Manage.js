@@ -26,6 +26,12 @@ export default class Manage extends Component {
   FormCollapce = () => {
     this.setState((prev) => ({ newCardCollapce: !prev.newCardCollapce }));
   };
+  addCardToDeck = async (q, a) => {
+    console.log("add card");
+    await apiService.create({ question: "asdddf", answer: "adsf" });
+    this.setState({ newCardCollapce: false });
+    await this.getData();
+  };
   render() {
     const data = this.state.data.map((e) => {
       return (
@@ -45,7 +51,10 @@ export default class Manage extends Component {
           <button onClick={this.collapceNewForm}>add new card</button>
         </div>
         {this.state.newCardCollapce ? (
-          <FormToCreateNewCard colapce={this.FormCollapce} />
+          <FormToCreateNewCard
+            colapce={this.FormCollapce}
+            addCardToDeck={this.addCardToDeck}
+          />
         ) : (
           ""
         )}
