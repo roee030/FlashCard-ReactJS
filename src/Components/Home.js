@@ -12,5 +12,6 @@ export default class Home extends Component {
 
 const wraper = {
   display: "flex",
+  height: "60vh",
   justifyContent: "center",
 };

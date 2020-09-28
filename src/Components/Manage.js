@@ -28,7 +28,7 @@ export default class Manage extends Component {
   };
   addCardToDeck = async (q, a) => {
     console.log("add card");
-    await apiService.create({ question: "asdddf", answer: "adsf" });
+    await apiService.create({ question: q, answer: a });
     this.setState({ newCardCollapce: false });
     await this.getData();
   };
