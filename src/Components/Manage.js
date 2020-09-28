@@ -5,6 +5,8 @@ export default class Manage extends Component {
   state = {
     data: [],
     newCardCollapce: false,
+    openEditPopUp: false,
+    currentIdForEdit: null,
   };
   async componentDidMount() {
     const dataFromApi = await apiService.get();
@@ -26,10 +28,21 @@ export default class Manage extends Component {
   FormCollapce = () => {
     this.setState((prev) => ({ newCardCollapce: !prev.newCardCollapce }));
   };
+  openEditPopUp = () => {
+    this.setState((prev) => ({ openEditPopUp: !prev.openEditPopUp }));
+  };
   addCardToDeck = async (q, a) => {
     console.log("add card");
     await apiService.create({ question: q, answer: a });
     this.setState({ newCardCollapce: false });
+    await this.getData();
+  };
+  editCardToDeck = async (q, a) => {
+    await apiService.update(this.state.currentIdForEdit, {
+      question: q,
+      answer: a,
+    });
+    this.setState({ openEditPopUp: false });
     await this.getData();
   };
   render() {
@@ -40,7 +53,13 @@ export default class Manage extends Component {
           <p>a:{e.answer}</p>
           <div className="manageBtn">
             <button onClick={() => this.deletedata(e.id)}>Delete</button>
-            <button>Edit</button>
+            <button
+              onClick={() =>
+                this.setState({ currentIdForEdit: e.id, openEditPopUp: true })
+              }
+            >
+              Edit
+            </button>
           </div>
         </div>
       );
@@ -54,6 +73,14 @@ export default class Manage extends Component {
           <FormToCreateNewCard
             colapce={this.FormCollapce}
             addCardToDeck={this.addCardToDeck}
+          />
+        ) : (
+          ""
+        )}
+        {this.state.openEditPopUp ? (
+          <FormToCreateNewCard
+            colapce={this.openEditPopUp}
+            addCardToDeck={this.editCardToDeck}
           />
         ) : (
           ""
